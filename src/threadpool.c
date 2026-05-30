@@ -70,5 +70,5 @@ void threadpool_add_task(threadpool_t * pool, void (*function)(void *), void * a
 }
 
 void example_task(void * arg) {
-    (void)arg;
+    printf("Pooled thread received example task with argument %p\n", arg);
 }
