@@ -63,9 +63,9 @@ void threadpool_add_task(threadpool_t * pool, void (*function)(void *), void * a
         pool->queued++;
         pool->task_queue[pool->queue_back].fn = function;
         pool->task_queue[pool->queue_back].arg = arg;
-        pool->queue_back++;
+        pool->queue_back = (pool->queue_back + 1) % QUEUE_SIZE;
+        pthread_cond_signal(&pool->cond_var);
     }
-    pthread_cond_signal(&pool->cond_var);
     pthread_mutex_unlock(&pool->lock);
 }
 
